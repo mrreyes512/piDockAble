@@ -3,10 +3,10 @@
 
 # pi Cluster
 [piCluster]
-piDockAble-0   ansible_host=192.168.200.101   # piDockAble-0.local
-piDockAble-1   ansible_host=192.168.200.102   # piDockAble-1.local
-piDockAble-2   ansible_host=192.168.200.103   # piDockAble-2.local
-piDockAble-3   ansible_host=192.168.200.104   # piDockAble-3.local
+piDockAble-0   ansible_host=192.168.200.130   # piDockAble-0.local
+piDockAble-1   ansible_host=192.168.200.131   # piDockAble-1.local
+piDockAble-2   ansible_host=192.168.200.132   # piDockAble-2.local
+piDockAble-3   ansible_host=192.168.200.133   # piDockAble-3.local
 
 [credential-pi:children]
 piCluster

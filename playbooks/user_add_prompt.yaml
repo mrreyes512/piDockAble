@@ -1,0 +1,60 @@
+---
+# this is a demo of how the user commands work and how to reference salted passwords
+# in vars sections.  You could also use vars_files if you like (see other examples)
+# Reference: https://go.shr.lc/2qhmT5j
+
+- name: Add Prompted User
+  hosts: all
+  gather_facts: no
+  become: yes
+  become_user: root
+
+  vars_prompt:
+
+    - name: "password"
+      prompt: "User's password"
+      private: yes
+      encrypt: "md5_crypt"
+      confirm: yes
+      salt_size: 7
+      default: password
+
+  tasks:
+
+    # Walk through account creation, modification, and deletion
+    - name: Create - "{{ username }}" - User Add, Assign groups, shell, and home
+      user:
+        name={{ username }}
+        group=users
+        shell=/bin/bash
+        createhome=yes
+      when: operation == "create"
+
+    - name: Create - Setting password
+      user:
+        name={{ username }}
+        password={{ password }}
+      when: operation == "create"
+
+    - name: Create - Setting sudo groups
+      user:
+        name={{ username }}
+        groups=sudo,gpio
+        append=yes
+      when:
+        - (operation == "create" or operation == "update")
+        - sudo == "yes"
+
+    # Remove the user when: ap playbooks/user_add.pb --extra-vars "delete=y"
+    - name: Delete - Removing "{{ username }}"
+      user:
+        name={{ username }}
+        state=absent
+      when: operation == "delete"
+
+    # - name: Adding all Pi groups
+    #   user:
+    #     name={{ username }}
+    #     groups=adm,dialout,cdrom,sudo,audio,video,plugdev,games,users,input,netdev,gpio,i2c,spi
+    #     append=yes
+    #   when: pisudo == "y"
