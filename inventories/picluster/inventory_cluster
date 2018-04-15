@@ -3,10 +3,22 @@
 
 # pi Cluster
 [piCluster]
-piDockAble-0   ansible_host=192.168.200.130   # piDockAble-0.local
-piDockAble-1   ansible_host=192.168.200.131   # piDockAble-1.local
-piDockAble-2   ansible_host=192.168.200.132   # piDockAble-2.local
-piDockAble-3   ansible_host=192.168.200.133   # piDockAble-3.local
+piDockAble-0   ansible_host=192.168.200.130   ansible_connection=ssh  # piDockAble-0.local
+piDockAble-1   ansible_host=192.168.200.131   ansible_connection=ssh  # piDockAble-1.local
+piDockAble-2   ansible_host=192.168.200.132   ansible_connection=ssh  # piDockAble-2.local
+piDockAble-3   ansible_host=192.168.200.133   ansible_connection=ssh  # piDockAble-3.local
 
 [credential-pi:children]
 piCluster
+
+[vagrant_env]
+piDockAble-vpi ansible_ssh_host=127.0.0.1 ansible_connection=local
+
+[credential-vagrant:children]
+vagrant_env
+
+[docker_env]
+piDockAble-dpi ansible_ssh_host=127.0.0.1 ansible_connection=docker
+
+[credential-docker:children]
+docker_env

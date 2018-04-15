@@ -102,3 +102,6 @@ ENV/
 
 # Vault passwords
 *.vault_pass
+
+# Vagrant files
+.vagrant/

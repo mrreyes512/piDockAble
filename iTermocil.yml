@@ -1,0 +1,8 @@
+windows:
+  - name: piDockAble
+    root: ~/dev/piDockAble
+    layout: main-vertical
+    panes:
+      - vim Makefile
+      - git status -sb
+      - tree
