@@ -2,6 +2,9 @@
 # this is a demo of how the user commands work and how to reference salted passwords
 # in vars sections.  You could also use vars_files if you like (see other examples)
 # Reference: https://go.shr.lc/2qhmT5j
+#
+# Usage:
+# ap playbooks/user_add_prompt.yaml --extra-vars "operation=create username=mreyes sudo=yes"
 
 - name: Add Prompted User
   hosts: all
@@ -12,7 +15,7 @@
   vars_prompt:
 
     - name: "password"
-      prompt: "User's password"
+      prompt: "New user's password"
       private: yes
       encrypt: "md5_crypt"
       confirm: yes
@@ -58,3 +61,9 @@
     #     groups=adm,dialout,cdrom,sudo,audio,video,plugdev,games,users,input,netdev,gpio,i2c,spi
     #     append=yes
     #   when: pisudo == "y"
+
+    - name: Set authorized key taken from file
+      authorized_key:
+        user: "{{ username }}"
+        state: present
+        key: "{{ lookup('file', '/Volumes/home/mrreyes512/.ssh/id_rsa.pub') }}"
