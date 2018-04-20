@@ -7,10 +7,10 @@
 # ap playbooks/user_add_prompt.yaml --extra-vars "operation=create username=mreyes sudo=yes"
 
 - name: Add Prompted User
-  hosts: all
+  hosts: piCluster
   gather_facts: no
   become: yes
-  become_user: root
+  # become_user: mreyes
 
   vars_prompt:
 
@@ -67,3 +67,4 @@
         user: "{{ username }}"
         state: present
         key: "{{ lookup('file', '/Volumes/home/mrreyes512/.ssh/id_rsa.pub') }}"
+      when: operation == "create"
