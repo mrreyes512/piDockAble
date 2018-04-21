@@ -1,0 +1,23 @@
+# Install Docker
+# -------------------------------------
+
+- name: Install Docker
+  hosts: "{{ target_hosts | default('cluster') }}"
+  # gather_facts: no
+  become: yes
+  become_user: root
+
+  roles:
+    - role: Benaud12.docker-pi
+      docker_pi_user: mreyes
+      docker_pi_hub_username: mrreyes512
+      docker_pi_hub_password: !vault |
+                $ANSIBLE_VAULT;1.1;AES256
+                63333163326431656663396662356663303663663966663838323265336539633633656133363334
+                6633346138393832666565303731613835373638303065340a333965643238646365643033386264
+                63326234313764623034646666303461316435656534313062636535323964393262303866643632
+                6236313832663230620a353531633636303662656538633166356665336566663736653731626537
+                6436
+      docker_pi_group_users:
+        - mreyes
+        - pi

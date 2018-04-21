@@ -8,8 +8,15 @@
 
   tasks:
 
-    - name: 'Update APT package cache'
+    - name: 'Refresh APT package cache'
       action: apt update_cache=yes
 
     - name: 'Upgrade APT to the lastest packages'
       action: apt upgrade=safe
+
+    - name: Install list of packages
+      apt: name={{item}} state=present
+      with_items:
+           - vim
+           - git
+           - zsh
