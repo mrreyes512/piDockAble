@@ -1,0 +1,13 @@
+# Disable default user Pi
+# -------------------------------------
+
+- name: Disable default users
+  hosts: "{{ target_hosts | default('cluster') }}"
+  gather_facts: no
+  become: yes
+  become_user: root
+
+  tasks:
+
+    - name: Lockout user -pi- login
+      command: passwd -l pi

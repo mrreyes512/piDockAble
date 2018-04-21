@@ -7,10 +7,11 @@
 # ap playbooks/user_add_prompt.yaml --extra-vars "operation=create username=mreyes sudo=yes"
 
 - name: Add Prompted User
-  hosts: piCluster
+  # hosts: cluster
+  hosts: "{{ target_hosts | default('cluster') }}"
   gather_facts: no
   become: yes
-  # become_user: mreyes
+  become_user: root
 
   vars_prompt:
 
@@ -21,6 +22,8 @@
       confirm: yes
       salt_size: 7
       default: password
+      when:
+        - operation == "create"
 
   tasks:
 
@@ -53,6 +56,8 @@
       user:
         name={{ username }}
         state=absent
+        remove=yes
+        force=yes
       when: operation == "delete"
 
     # - name: Adding all Pi groups

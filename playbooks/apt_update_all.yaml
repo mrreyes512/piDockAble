@@ -1,0 +1,15 @@
+# Disable default user Pi
+# -------------------------------------
+
+- name: Update and Upgrade all packages
+  hosts: "{{ target_hosts | default('cluster') }}"
+  gather_facts: no
+  become: yes
+
+  tasks:
+
+    - name: 'Update APT package cache'
+      action: apt update_cache=yes
+
+    - name: 'Upgrade APT to the lastest packages'
+      action: apt upgrade=safe
